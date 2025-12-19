@@ -1,1 +1,12 @@
 rootProject.name = 'spring_boot_web'
+
+include 'web:rest_annotation_base_style',
+        'actuator',
+        'error',
+        'filter',
+        'interceptor',
+        'rest_client',
+        'test',
+        'validation',
+        'virtual_threads',
+        'webflux'
