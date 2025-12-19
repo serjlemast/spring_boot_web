@@ -1,6 +1,8 @@
 rootProject.name = 'spring_boot_web'
 
 include 'web:rest_annotation_base_style',
+        'web:function_endpoint',
+        'web:function_reactive_endpoint',
         'actuator',
         'error',
         'filter',

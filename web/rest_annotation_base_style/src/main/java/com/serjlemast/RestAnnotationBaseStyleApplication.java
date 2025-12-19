@@ -1,4 +1,4 @@
-package org.example.rest_annotation_base_style;
+package com.serjlemast;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
