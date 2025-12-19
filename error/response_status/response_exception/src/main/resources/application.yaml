@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: response_exception
+  web:
+    error:
+      include-stacktrace: always
