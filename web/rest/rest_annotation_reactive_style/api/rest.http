@@ -1,0 +1,16 @@
+###
+GET http://localhost:8080/users
+
+###
+GET http://localhost:8080/users/v2
+
+###
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "name": "{{$random.alphanumeric(8)}}"
+}
+
+###
+GET http://localhost:8080/users/1

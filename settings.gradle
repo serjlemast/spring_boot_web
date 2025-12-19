@@ -1,8 +1,13 @@
 rootProject.name = 'spring_boot_web'
 
-include 'web:rest_annotation_base_style',
-        'web:function_endpoint',
-        'web:function_reactive_endpoint',
+include 'web:rest:function_reactive_endpoint',
+        'web:rest:rest_annotation_base_style',
+        'web:rest:function_endpoint',
+        'web:rest:rest_annotation_reactive_style',
+        'web:grpc',
+        'web:soap',
+        'web:sse',
+        'web:websocket',
         'actuator',
         'error',
         'filter',
@@ -11,4 +16,5 @@ include 'web:rest_annotation_base_style',
         'test',
         'validation',
         'virtual_threads',
-        'webflux'
+        'webflux',
+        'shutdown:hard_shutdown'
