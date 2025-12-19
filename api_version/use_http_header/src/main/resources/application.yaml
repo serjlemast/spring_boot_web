@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: use_http_header
+
+  threads:
+    virtual:
+      enabled: true
+  mvc:
+    apiversion:
+      supported: v1, v2
+      use:
+        header: api-version
+      default: v1
