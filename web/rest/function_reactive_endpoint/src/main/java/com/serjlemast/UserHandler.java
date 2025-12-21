@@ -13,30 +13,33 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class UserHandler {
 
     private final Map<Integer, User> users = new ConcurrentHashMap<>();
+    private final AtomicInteger idGenerator = new AtomicInteger();
 
-    private final AtomicInteger counter = new AtomicInteger(0);
-
-    public Mono<ServerResponse> findUserById(ServerRequest request) {
-        return Mono.just(request.pathVariable("id"))
-                .map(Integer::valueOf)
+    public Mono<ServerResponse> getUserById(ServerRequest request) {
+        return Mono.fromSupplier(() -> request.pathVariable("id"))
+                .map(Integer::parseInt)
                 .map(users::get)
-                .flatMap(ServerResponse.ok()::bodyValue);
+                .flatMap(user ->
+                        user != null
+                                ? ServerResponse.ok().bodyValue(user)
+                                : ServerResponse.notFound().build()
+                );
     }
 
-    public Mono<ServerResponse> findAll(ServerRequest request) {
-        return ServerResponse.ok().bodyValue(users.values());
+    public Mono<ServerResponse> getAllUsers(ServerRequest request) {
+        return ServerResponse.ok()
+                .bodyValue(users.values());
     }
 
-    public Mono<ServerResponse> create(ServerRequest request) {
+    public Mono<ServerResponse> createUser(ServerRequest request) {
         return request.bodyToMono(User.class)
-                .map(user -> {
-                    user.setId(counter.incrementAndGet());
-                    return user;
-                })
-                .map(user -> {
-                    users.put(user.getId(), user);
-                    return user;
-                })
-                .flatMap(ServerResponse.ok()::bodyValue);
+                .map(this::assignId)
+                .doOnNext(user -> users.put(user.getId(), user))
+                .flatMap(user -> ServerResponse.ok().bodyValue(user));
+    }
+
+    private User assignId(User user) {
+        user.setId(idGenerator.incrementAndGet());
+        return user;
     }
 }

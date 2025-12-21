@@ -14,23 +14,27 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class UserHandler {
 
     private final Map<Integer, User> users = new ConcurrentHashMap<>();
+    private final AtomicInteger idGenerator = new AtomicInteger();
 
-    private final AtomicInteger counter = new AtomicInteger(0);
-
-    public ServerResponse findUserById(ServerRequest request) {
-        String id = request.pathVariable("id");
-        Integer userId = Integer.parseInt(id);
+    public ServerResponse getUserById(ServerRequest request) {
+        String idStr = request.pathVariable("id");
+        int userId = Integer.parseInt(idStr);
         User user = users.get(userId);
+
+        if (user == null) {
+            return ServerResponse.notFound().build();
+        }
+
         return ServerResponse.ok().body(user);
     }
 
-    public ServerResponse findAll(ServerRequest serverRequest) {
+    public ServerResponse getAllUsers(ServerRequest request) {
         return ServerResponse.ok().body(users.values());
     }
 
-    public ServerResponse create(ServerRequest serverRequest) throws ServletException, IOException {
-        User user = serverRequest.body(User.class);
-        int id = counter.incrementAndGet();
+    public ServerResponse createUser(ServerRequest request) throws ServletException, IOException {
+        User user = request.body(User.class);
+        int id = idGenerator.incrementAndGet();
         user.setId(id);
         users.put(id, user);
         return ServerResponse.ok().body(user);

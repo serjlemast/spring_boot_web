@@ -1,7 +1,13 @@
 @Component/Service/Repository
 
-@Configuration
+@Configuration/AutoConfiguration
 
 @Bean/Primary/Qualifier/Fallback
 
 @Controller/RestController
+
+@Singleton/Prototype
+
+@Order
+
+@PostConstruct/PreDestroy

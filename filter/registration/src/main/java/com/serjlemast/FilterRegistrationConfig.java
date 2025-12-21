@@ -1,6 +1,5 @@
 package com.serjlemast;
 
-import jakarta.servlet.annotation.WebFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

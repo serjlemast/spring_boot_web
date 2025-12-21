@@ -13,9 +13,9 @@ public class UserRouter {
     @Bean
     public RouterFunction<ServerResponse> routerUser(UserHandler handler) {
         return route()
-                .GET("/users/{id}", handler::findUserById)
-                .GET("/users", handler::findAll)
-                .POST("/users", handler::create)
+                .GET("/users/{id}", handler::getUserById)
+                .GET("/users", handler::getAllUsers)
+                .POST("/users", handler::createUser)
                 .build();
     }
 }

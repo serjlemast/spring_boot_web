@@ -13,23 +13,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class UserService {
 
     private final Map<Integer, User> users = new ConcurrentHashMap<>();
-
-    private final AtomicInteger counter = new AtomicInteger(0);
+    private final AtomicInteger counter = new AtomicInteger();
 
     public Mono<User> findUserById(int id) {
-        return Mono.just(users.get(id));
+        return Mono.defer(() -> Mono.justOrEmpty(users.get(id)));
     }
 
     public Flux<User> findAll() {
-        return Flux.fromIterable(users.values())
-                .delayElements(Duration.ofMillis(1000));
+        return Flux.defer(() -> Flux.fromIterable(users.values()))
+                .delayElements(Duration.ofSeconds(1)); // optional/demo-only
     }
 
     public Mono<User> create(User user) {
-        return Mono.just(user)
-                .map(u -> users.computeIfAbsent(counter.incrementAndGet(), (k) -> {
-                    u.setId(k);
-                    return u;
-                }));
+        return Mono.defer(() -> {
+            int id = counter.incrementAndGet();
+            user.setId(id);
+            users.put(id, user);
+            return Mono.just(user);
+        });
     }
 }
