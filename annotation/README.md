@@ -1,10 +1,8 @@
-@Component/Service/Repository
+@Component/Service/Repository/Controller/RestController
 
 @Configuration/AutoConfiguration
 
 @Bean/Primary/Qualifier/Fallback
-
-@Controller/RestController
 
 @Singleton/Prototype
 

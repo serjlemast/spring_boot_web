@@ -1,0 +1,14 @@
+###
+GET http://localhost:8080/users
+
+###
+POST http://localhost:8080/v1/users
+Content-Type: application/json
+
+
+{
+  "name": "cot"
+}
+
+###
+GET http://localhost:8080/v1/users/1

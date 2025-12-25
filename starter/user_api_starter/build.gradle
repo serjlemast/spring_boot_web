@@ -1,0 +1,21 @@
+plugins {
+    id 'java-library'
+    id "com.github.ben-manes.versions" version "${benManesDependencyVersion}"
+}
+
+group = "${buildGroup}"
+version = "${buildVersion}"
+
+java {
+    sourceCompatibility = "${javaVersion}"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api(platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}"))
+    api("org.springframework.boot:spring-boot-autoconfigure")
+    api('org.springframework.boot:spring-boot-starter-webmvc')
+}
